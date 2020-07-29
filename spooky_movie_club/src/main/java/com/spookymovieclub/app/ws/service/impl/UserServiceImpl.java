@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.spookymovieclub.app.ws.UserRepository;
 import com.spookymovieclub.app.ws.io.entity.UserEntity;
 import com.spookymovieclub.app.ws.service.UserService;
+import com.spookymovieclub.app.ws.shared.Utils;
 import com.spookymovieclub.app.ws.shared.dto.UserDto;
 
 @Service
@@ -14,6 +15,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	Utils utils;
 
 	@Override
 	public UserDto createUser(UserDto user) {
@@ -23,8 +27,9 @@ public class UserServiceImpl implements UserService {
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 		
+		String publicUserId = utils.generateUserId(30);
+		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword("test");
-		userEntity.setUserId("testUserId");
 		
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 		
