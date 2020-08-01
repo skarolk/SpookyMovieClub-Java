@@ -9,12 +9,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SpookyMovieClubApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(SpookyMovieClubApplication.class, args);
+
 	}
-	
+
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+
 		return new BCryptPasswordEncoder();
+
+	}
+
+	@Bean
+	public SpringApplicationContext springApplicationContext() {
+
+		return new SpringApplicationContext();
+
 	}
 
 }
