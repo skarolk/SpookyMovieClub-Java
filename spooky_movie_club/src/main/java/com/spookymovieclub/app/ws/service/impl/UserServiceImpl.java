@@ -10,11 +10,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.spookymovieclub.app.ws.exceptions.UserServiceException;
 import com.spookymovieclub.app.ws.io.entity.UserEntity;
 import com.spookymovieclub.app.ws.io.repositories.UserRepository;
 import com.spookymovieclub.app.ws.service.UserService;
 import com.spookymovieclub.app.ws.shared.Utils;
 import com.spookymovieclub.app.ws.shared.dto.UserDto;
+import com.spookymovieclub.app.ws.ui.model.response.ErrorMessages;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -82,10 +84,33 @@ public class UserServiceImpl implements UserService {
 		UserDto returnValue = new UserDto();
 		UserEntity userEntity = userRepository.findByUserId(userId);
 
+//		This implementation uses spring to handle exceptions
+//		if (userEntity == null)
+//			throw new UsernameNotFoundException(userId);
+
+//		This implementation uses custom error handling
 		if (userEntity == null)
-			throw new UsernameNotFoundException(userId);
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
 		BeanUtils.copyProperties(userEntity, returnValue);
+
+		return returnValue;
+	}
+
+	@Override
+	public UserDto updateUser(String userId, UserDto user) {
+
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
+		userEntity.setFirstName(user.getFirstName());
+		userEntity.setLastName(user.getLastName());
+
+		UserEntity updatedUserDetails = userRepository.save(userEntity);
+		BeanUtils.copyProperties(updatedUserDetails, returnValue);
 
 		return returnValue;
 	}
