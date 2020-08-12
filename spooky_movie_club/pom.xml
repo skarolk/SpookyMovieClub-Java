@@ -10,12 +10,13 @@
 	</parent>
 	<groupId>com.spookymovieclub.app.ws</groupId>
 	<artifactId>spooky_movie_club</artifactId>
+	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spooky_movie_club</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencies>
