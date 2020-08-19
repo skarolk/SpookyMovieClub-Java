@@ -18,9 +18,7 @@ import io.jsonwebtoken.Jwts;
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 
 	public AuthorizationFilter(AuthenticationManager authManager) {
-
 		super(authManager);
-
 	}
 
 	@Override
@@ -30,10 +28,8 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 		String header = req.getHeader(SecurityConstants.HEADER_STRING);
 
 		if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-
 			chain.doFilter(req, res);
 			return;
-
 		}
 
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
@@ -54,17 +50,11 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 					.getBody().getSubject();
 
 			if (user != null) {
-
 				return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-
 			}
-
 			return null;
-
 		}
-
 		return null;
-
 	}
 
 }

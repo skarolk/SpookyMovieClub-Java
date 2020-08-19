@@ -30,9 +30,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private final AuthenticationManager authenticationManager;
 
 	public AuthenticationFilter(AuthenticationManager authenticationManager) {
-
 		this.authenticationManager = authenticationManager;
-
 	}
 
 	@Override
@@ -40,7 +38,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 			throws AuthenticationException {
 
 		try {
-
 			UserLoginRequestModel creds = new ObjectMapper().readValue(req.getInputStream(),
 					UserLoginRequestModel.class);
 
@@ -48,9 +45,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 					new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
 
 		} catch (IOException e) {
-
 			throw new RuntimeException(e);
-
 		}
 
 	}
@@ -66,6 +61,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 				.signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
 
 		UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
+
 		UserDto userDto = userService.getUser(userName);
 
 		res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);

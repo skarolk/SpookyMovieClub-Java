@@ -14,36 +14,26 @@ public class SpookyMovieClubApplication extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-
 		return application.sources(SpookyMovieClubApplication.class);
-
 	}
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(SpookyMovieClubApplication.class, args);
-
 	}
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-
 		return new BCryptPasswordEncoder();
-
 	}
 
 	@Bean
 	public SpringApplicationContext springApplicationContext() {
-
 		return new SpringApplicationContext();
-
 	}
 
 	@Bean(name = "AppProperties")
 	public AppProperties getAppProperties() {
-
 		return new AppProperties();
-
 	}
 
 }
